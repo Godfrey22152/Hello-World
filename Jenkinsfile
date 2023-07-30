@@ -1,11 +1,5 @@
 pipeline {
-    agent {
-        docker {
-            // Use a Node.js with Angular CLI Docker image
-            image 'node:14'
-            args '-p 4200:4200' // Expose port 4200 for serving the application
-        }
-    }
+    agent any
 
     stages {
         stage('Checkout') {
@@ -15,26 +9,12 @@ pipeline {
             }
         }
 
-        stage('Install Dependencies') {
+        stage('Build and Run') {
             steps {
-                // Install Angular CLI globally
-                sh 'npm install -g @angular/cli'
-                // Install project dependencies
+                // Add any build or run steps for your Hello-World Angular application here
+                // For example, you can install dependencies and serve the application
                 sh 'npm install'
-            }
-        }
-
-        stage('Build') {
-            steps {
-                // Build the Angular app for production
-                sh 'ng build --prod'
-            }
-        }
-
-        stage('Start Server') {
-            steps {
-                // Serve the built Angular application using Angular CLI
-                sh 'ng serve --prod --host 0.0.0.0 --port 4200'
+                sh 'npm start'
             }
         }
     }
